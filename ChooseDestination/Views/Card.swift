@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Card: View {
+struct Card: View,Identifiable {
     let id = UUID()
     var honeymoon: Destination
     var body: some View {

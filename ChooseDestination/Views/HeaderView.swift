@@ -8,14 +8,22 @@
 import SwiftUI
 
 struct HeaderView: View {
+    @Binding var showGuideView: Bool
+    @Binding var showInfoView : Bool
+    let feedbeck = UINotificationFeedbackGenerator()
     var body: some View {
         HStack {
             Button {
-                print("")
+                playSound(soundName: "sound-click", soundType: "mp3")
+                feedbeck.notificationOccurred(.success)
+                showInfoView.toggle()
             } label: {
                 Image(systemName: "info.circle")
                     .font(.system(size: 24, weight: .regular))
             }.tint(.primary)
+                .sheet(isPresented: $showInfoView) {
+                    InfoView()
+                }
             Spacer()
             Image("logo-honeymoon-pink")
                 .resizable()
@@ -23,21 +31,18 @@ struct HeaderView: View {
                 .frame(minHeight: 28)
             Spacer()
             Button {
-                print("")
+                playSound(soundName: "sound-click", soundType: "mp3")
+                feedbeck.notificationOccurred(.success)
+                showGuideView.toggle()
             } label: {
                 Image(systemName: "questionmark.circle")
-                    .font(.system(size: 24,weight: .regular))
-                    
-            }.tint(.primary)
+                    .font(.system(size: 24, weight: .regular))
 
-            
+            }
+            .tint(.primary)
+            .sheet(isPresented: $showGuideView) {
+                GuideView()
+            }
         }.padding()
-    }
-}
-
-struct HeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        HeaderView()
-            .previewLayout(.fixed(width: 375, height: 60))
     }
 }
